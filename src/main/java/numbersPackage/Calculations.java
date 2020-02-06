@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class Calculations {
 	
 	@GetMapping("/addition")
-	public String addition(@RequestParam List<String> numbers) {
+	public String addition(@RequestParam(required = false) List<String> numbers) {
 		
-		CalculationResult result = new CalculationResult(numbers, "+");
-		return result.info + " " + result.calculation;
+		if (numbers != null) {
+			
+			CalculationResult result = new CalculationResult(numbers, "+");
+			return result.info + " " + result.calculation;
+		} else {
+			return "No numbers given";
+		}
 	}
 
 	@GetMapping("/multiplication")
